@@ -4,7 +4,7 @@ import ru.tinkoff.fintech.model.TransactionInfo
 
 class AllRule : CashbackRule() {
     override fun calculateCashback(transactionInfo: TransactionInfo): Double {
-        if (transactionInfo.mccCode == 5734 && transactionInfo.loyaltyProgramName == LOYALTY_PROGRAM_ALL &&
+        if (transactionInfo.mccCode == MCC_SOFTWARE && transactionInfo.loyaltyProgramName == LOYALTY_PROGRAM_ALL &&
             isPal(transactionInfo.transactionSum)
         ) {
             return transactionInfo.transactionSum *

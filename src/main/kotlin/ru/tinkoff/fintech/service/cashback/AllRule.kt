@@ -28,7 +28,7 @@ class AllRule : CashbackRule() {
     }
 
     private fun NOK(a: Int, b: Int): Int =
-        a / NOD(a, b) * b
+        a * b / NOD(a, b)
 
     private tailrec fun NOD(a: Int, b: Int): Int =
         if (b == 0) a else NOD(b, a % b)

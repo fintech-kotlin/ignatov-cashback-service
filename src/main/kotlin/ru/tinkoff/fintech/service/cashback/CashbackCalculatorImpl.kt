@@ -2,6 +2,8 @@ package ru.tinkoff.fintech.service.cashback
 
 import ru.tinkoff.fintech.model.TransactionInfo
 import kotlin.math.min
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 internal const val LOYALTY_PROGRAM_BLACK = "BLACK"
 internal const val LOYALTY_PROGRAM_ALL = "ALL"
@@ -19,12 +21,15 @@ class CashbackCalculatorImpl : CashbackCalculator {
     )
 
     override fun calculateCashback(transactionInfo: TransactionInfo): Double {
-        var cashback = transactionInfo.cashbackTotalValue
+        var cashback = 0.0
 
         for (cashbackRule in cashbackRules)
             cashback += cashbackRule.calculateCashback(transactionInfo)
 
-        return min(MAX_CASH_BACK, cashback)
+        //фиксим ошибку представления дробных чисел
+        cashback = (cashback * 100.0).roundToInt() / 100.0
+
+        return min(MAX_CASH_BACK - transactionInfo.cashbackTotalValue, cashback)
     }
 
 
